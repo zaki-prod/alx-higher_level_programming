@@ -1,35 +1,16 @@
-#include "lists.h"
+#!/usr/bin/python3
+import random
+number = random.randint(-10000, 10000)
+if number >= 0:
+    last_digit = number % 10
+else:
+    last_digit = ((-number % 10) * -1)
 
-/**
- * insert_node - Inserts a number into a sorted singly-linked list.
- * @head: A pointer the head of the linked list.
- * @number: The number to insert.
- *
- * Return: If the function fails - NULL.
- * Otherwise - a pointer to the new node.
- */
-listint_t *insert_node(listint_t **head, int number)
-{
-	listint_t *node = *head, *new;
+message = f"Last digit of {number} is {last_digit}"
 
-	new = malloc(sizeof(listint_t));
-	if (new == NULL)
-		return (NULL);
-	new->n = number;
-
-	if (node == NULL || node->n >= number)
-	{
-		new->next = node;
-		*head = new;
-		return (new);
-	}
-
-	while (node && node->next && node->next->n < number)
-		node = node->next;
-
-	new->next = node->next;
-	node->next = new;
-
-	return (new);
-}
-
+if last_digit == 0:
+    print(f"{message} and is 0")
+elif last_digit > 5 and last_digit % 10 != 0:
+    print(f"{message} and is greater than 5")
+else:
+    print(f"{message} and is less than 6 and not 0")
