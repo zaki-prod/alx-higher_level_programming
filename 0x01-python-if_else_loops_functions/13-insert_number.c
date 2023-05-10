@@ -1,16 +1,55 @@
-#!/usr/bin/python3
-import random
-number = random.randint(-10000, 10000)
-if number >= 0:
-    last_digit = number % 10
-else:
-    last_digit = ((-number % 10) * -1)
+#include <stdlib.h>
+#include "lists.h"
 
-message = f"Last digit of {number} is {last_digit}"
+/**
+ * insert_node - Inserts a number into a sorted singly linked list.
+ *
+ * @head: Double pointer to a singly linked list
+ *
+ * @number: Value of the new node.
+ *
+ * Return: The address of the new node, or NULL if it failed.
+ */
 
-if last_digit == 0:
-    print(f"{message} and is 0")
-elif last_digit > 5 and last_digit % 10 != 0:
-    print(f"{message} and is greater than 5")
-else:
-    print(f"{message} and is less than 6 and not 0")
+listint_t *insert_node(listint_t **head, int number)
+{
+	int flag = 0;
+	listint_t *new_node = NULL, *actual = NULL, *after = NULL;
+
+	if (head == NULL)
+		return (NULL);
+	new_node = malloc(sizeof(listint_t));
+	if (!new_node)
+		return (NULL);
+	new_node->n = number, new_node->next = NULL;
+	if (*head == NULL)
+	{
+		*head = new_node;
+		return (*head);
+	}
+	actual = *head;
+	if (number <= actual->n)
+	{
+		new_node->next = actual, *head = new_node;
+		return (*head);
+	}
+	if (number > actual->n && !actual->next)
+	{
+		actual->next = new_node;
+		return (new_node);
+	}
+	after = actual->next;
+	while (actual)
+	{
+		if (!after)
+			actual->next = new_node, flag = 1;
+		else if (after->n == number)
+			actual->next = new_node, new_node->next = after, flag = 1;
+		else if (after->n > number && actual->n < number)
+			actual->next = new_node, new_node->next = after, flag = 1;
+		if (flag)
+			break;
+		after = after->next, actual = actual->next;
+	}
+	return (new_node);
+}
