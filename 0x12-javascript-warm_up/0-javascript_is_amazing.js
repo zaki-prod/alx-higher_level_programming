@@ -1,3 +1,2 @@
 #!/usr/bin/node
-const myVar = 'JavaScript is amazing';
-console.log(myVar);
+console.log(process.argv[2] ? process.argv[2] : 'No argument');
